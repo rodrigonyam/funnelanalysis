@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "on3tqP7JGow=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rodog\\csharping\\funnelanalysis\\FunnelAnalysis.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rodog\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512",
+    "C:\\Users\\rodog\\.nuget\\packages\\mathnet.numerics\\5.0.0\\mathnet.numerics.5.0.0.nupkg.sha512",
+    "C:\\Users\\rodog\\.nuget\\packages\\spectre.console\\0.49.1\\spectre.console.0.49.1.nupkg.sha512"
+  ],
+  "logs": []
+}

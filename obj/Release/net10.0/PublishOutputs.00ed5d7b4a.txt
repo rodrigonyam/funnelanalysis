@@ -1,0 +1,9 @@
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\FunnelAnalysis.exe
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\Data\sample_ecommerce.csv
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\FunnelAnalysis.dll
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\FunnelAnalysis.deps.json
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\FunnelAnalysis.runtimeconfig.json
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\FunnelAnalysis.pdb
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\CsvHelper.dll
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\MathNet.Numerics.dll
+C:\Users\rodog\AppData\Local\Temp\funnelanalysis_pub\Spectre.Console.dll

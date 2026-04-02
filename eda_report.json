@@ -1,0 +1,179 @@
+﻿{
+    "generated_at":  "2026-04-02T00:24:37.5634698-04:00",
+    "row_count":  100,
+    "column_stats":  [
+                         {
+                             "column":  "age",
+                             "count":  100,
+                             "missing":  2,
+                             "missing_pct":  2,
+                             "min":  19,
+                             "q1":  28,
+                             "median":  35.5,
+                             "mean":  36.4898,
+                             "q3":  44.75,
+                             "max":  58,
+                             "std_dev":  10.7964,
+                             "skewness":  0.2925,
+                             "outlier_count":  0
+                         },
+                         {
+                             "column":  "session_duration_sec",
+                             "count":  100,
+                             "missing":  0,
+                             "missing_pct":  0,
+                             "min":  60,
+                             "q1":  138.75,
+                             "median":  305,
+                             "mean":  337.18,
+                             "q3":  522.5,
+                             "max":  740,
+                             "std_dev":  209.5646,
+                             "skewness":  0.3042,
+                             "outlier_count":  0
+                         },
+                         {
+                             "column":  "pages_viewed",
+                             "count":  100,
+                             "missing":  0,
+                             "missing_pct":  0,
+                             "min":  1,
+                             "q1":  3.75,
+                             "median":  8.5,
+                             "mean":  9.43,
+                             "q3":  14.25,
+                             "max":  22,
+                             "std_dev":  6.1089,
+                             "skewness":  0.3897,
+                             "outlier_count":  0
+                         },
+                         {
+                             "column":  "added_to_cart",
+                             "count":  100,
+                             "missing":  0,
+                             "missing_pct":  0,
+                             "min":  0,
+                             "q1":  0,
+                             "median":  1,
+                             "mean":  0.67,
+                             "q3":  1,
+                             "max":  1,
+                             "std_dev":  0.4726,
+                             "skewness":  -0.7341,
+                             "outlier_count":  0
+                         },
+                         {
+                             "column":  "purchased",
+                             "count":  100,
+                             "missing":  0,
+                             "missing_pct":  0,
+                             "min":  0,
+                             "q1":  0,
+                             "median":  1,
+                             "mean":  0.53,
+                             "q3":  1,
+                             "max":  1,
+                             "std_dev":  0.5016,
+                             "skewness":  -0.1221,
+                             "outlier_count":  0
+                         },
+                         {
+                             "column":  "order_value",
+                             "count":  100,
+                             "missing":  47,
+                             "missing_pct":  47,
+                             "min":  89.99,
+                             "q1":  189.99,
+                             "median":  330.75,
+                             "mean":  372.1458,
+                             "q3":  495,
+                             "max":  920,
+                             "std_dev":  217.4347,
+                             "skewness":  0.8763,
+                             "outlier_count":  0
+                         }
+                     ],
+    "correlations":  [
+                         {
+                             "column_a":  "session_duration_sec",
+                             "column_b":  "pages_viewed",
+                             "pearson_r":  0.9923
+                         },
+                         {
+                             "column_a":  "pages_viewed",
+                             "column_b":  "order_value",
+                             "pearson_r":  0.9341
+                         },
+                         {
+                             "column_a":  "age",
+                             "column_b":  "session_duration_sec",
+                             "pearson_r":  0.9318
+                         },
+                         {
+                             "column_a":  "age",
+                             "column_b":  "pages_viewed",
+                             "pearson_r":  0.9297
+                         },
+                         {
+                             "column_a":  "age",
+                             "column_b":  "order_value",
+                             "pearson_r":  0.9214
+                         },
+                         {
+                             "column_a":  "session_duration_sec",
+                             "column_b":  "order_value",
+                             "pearson_r":  0.9206
+                         },
+                         {
+                             "column_a":  "pages_viewed",
+                             "column_b":  "purchased",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "purchased",
+                             "column_b":  "order_value",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "added_to_cart",
+                             "column_b":  "order_value",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "added_to_cart",
+                             "column_b":  "purchased",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "age",
+                             "column_b":  "purchased",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "age",
+                             "column_b":  "added_to_cart",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "session_duration_sec",
+                             "column_b":  "added_to_cart",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "pages_viewed",
+                             "column_b":  "added_to_cart",
+                             "pearson_r":  0
+                         },
+                         {
+                             "column_a":  "session_duration_sec",
+                             "column_b":  "purchased",
+                             "pearson_r":  0
+                         }
+                     ],
+    "funnel":  {
+                   "Visited":  100,
+                   "Viewed 3+ pages":  84,
+                   "Added to Cart":  67,
+                   "Purchased":  53
+               }
+}

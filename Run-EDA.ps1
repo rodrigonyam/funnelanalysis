@@ -24,8 +24,8 @@ function Get-Percentile {
     $n = $sorted.Count
     if ($n -eq 0) { return 0.0 }
     $idx = $p / 100.0 * ($n - 1)
-    $lo  = [int][math]::Floor($idx)
-    $hi  = [int][math]::Ceiling($idx)
+    $lo = [int][math]::Floor($idx)
+    $hi = [int][math]::Ceiling($idx)
     if ($lo -eq $hi) { return $sorted[$lo] }
     return $sorted[$lo] + ($idx - $lo) * ($sorted[$hi] - $sorted[$lo])
 }
@@ -44,7 +44,7 @@ function Get-Skewness {
     $n = $arr.Count
     if ($n -lt 3) { return 0.0 }
     $mean = ($arr | Measure-Object -Average).Average
-    $s    = Get-StdDev $arr
+    $s = Get-StdDev $arr
     if ($s -eq 0) { return 0.0 }
     $sum3 = ($arr | ForEach-Object { [math]::Pow(($_ - $mean) / $s, 3) } | Measure-Object -Sum).Sum
     return ($n / (($n - 1) * ($n - 2))) * $sum3
@@ -68,39 +68,39 @@ function Get-PearsonR {
 
 function Get-ColStats {
     param([string]$Name, [object[]]$raw)
-    $total   = $raw.Count
+    $total = $raw.Count
     $missing = @($raw | Where-Object { $null -eq $_ -or $_ -eq '' }).Count
-    $vals    = [double[]]@($raw | Where-Object { $null -ne $_ -and $_ -ne '' } | ForEach-Object { [double]$_ })
-    $n       = $vals.Count
+    $vals = [double[]]@($raw | Where-Object { $null -ne $_ -and $_ -ne '' } | ForEach-Object { [double]$_ })
+    $n = $vals.Count
 
     if ($n -eq 0) {
         return [PSCustomObject]@{
-            Column=$Name; Count=$total; Missing=$missing
-            Min=0.0; Q1=0.0; Median=0.0; Mean=0.0; Q3=0.0; Max=0.0
-            StdDev=0.0; Skewness=0.0; Outliers=@()
+            Column = $Name; Count = $total; Missing = $missing
+            Min = 0.0; Q1 = 0.0; Median = 0.0; Mean = 0.0; Q3 = 0.0; Max = 0.0
+            StdDev = 0.0; Skewness = 0.0; Outliers = @()
         }
     }
 
-    $sorted   = [double[]]($vals | Sort-Object)
-    $mean     = ($vals | Measure-Object -Average).Average
-    $minV     = $sorted[0]
-    $maxV     = $sorted[-1]
-    $q1       = Get-Percentile -sorted $sorted -p 25
-    $q3       = Get-Percentile -sorted $sorted -p 75
-    $med      = Get-Median -sorted $sorted
-    $std      = Get-StdDev -arr $vals
-    $skew     = Get-Skewness -arr $vals
-    $iqr      = $q3 - $q1
-    $loFence  = $q1 - 1.5 * $iqr
-    $hiFence  = $q3 + 1.5 * $iqr
+    $sorted = [double[]]($vals | Sort-Object)
+    $mean = ($vals | Measure-Object -Average).Average
+    $minV = $sorted[0]
+    $maxV = $sorted[-1]
+    $q1 = Get-Percentile -sorted $sorted -p 25
+    $q3 = Get-Percentile -sorted $sorted -p 75
+    $med = Get-Median -sorted $sorted
+    $std = Get-StdDev -arr $vals
+    $skew = Get-Skewness -arr $vals
+    $iqr = $q3 - $q1
+    $loFence = $q1 - 1.5 * $iqr
+    $hiFence = $q3 + 1.5 * $iqr
     $outliers = @($vals | Where-Object { $_ -lt $loFence -or $_ -gt $hiFence })
 
     return [PSCustomObject]@{
-        Column=$Name; Count=$total; Missing=$missing
-        Min=[math]::Round($minV,4); Q1=[math]::Round($q1,4); Median=[math]::Round($med,4)
-        Mean=[math]::Round($mean,4); Q3=[math]::Round($q3,4); Max=[math]::Round($maxV,4)
-        StdDev=[math]::Round($std,4); Skewness=[math]::Round($skew,4)
-        Outliers=$outliers
+        Column = $Name; Count = $total; Missing = $missing
+        Min = [math]::Round($minV, 4); Q1 = [math]::Round($q1, 4); Median = [math]::Round($med, 4)
+        Mean = [math]::Round($mean, 4); Q3 = [math]::Round($q3, 4); Max = [math]::Round($maxV, 4)
+        StdDev = [math]::Round($std, 4); Skewness = [math]::Round($skew, 4)
+        Outliers = $outliers
     }
 }
 
@@ -128,7 +128,7 @@ function Write-Histogram {
     if ($Values.Count -eq 0) { return }
     $minV = ($Values | Measure-Object -Minimum).Minimum
     $maxV = ($Values | Measure-Object -Maximum).Maximum
-    $w    = if ($maxV -gt $minV) { ($maxV - $minV) / $Bins } else { 1.0 }
+    $w = if ($maxV -gt $minV) { ($maxV - $minV) / $Bins } else { 1.0 }
     $counts = New-Object int[] $Bins
     foreach ($v in $Values) {
         $idx = [int][math]::Floor(($v - $minV) / $w)
@@ -139,8 +139,8 @@ function Write-Histogram {
     Write-Host ('  ' + ('-' * 72))
     $maxC = ($counts | Measure-Object -Maximum).Maximum
     for ($i = 0; $i -lt $Bins; $i++) {
-        $lo    = [math]::Round($minV + $i * $w, 1)
-        $hi    = [math]::Round($lo + $w, 1)
+        $lo = [math]::Round($minV + $i * $w, 1)
+        $hi = [math]::Round($lo + $w, 1)
         $label = "$lo - $hi"
         Write-Bar -Label $label -Value $counts[$i] -MaxVal $maxC -Color DarkCyan
     }
@@ -154,9 +154,9 @@ function Write-FunnelChart {
     foreach ($entry in $Steps.GetEnumerator()) {
         if ($null -eq $first) { $first = [double]$entry.Value }
         $ratio = if ($first -gt 0) { [double]$entry.Value / $first } else { 0.0 }
-        $len   = [int]($ratio * 50)
-        $bar   = '#' * $len
-        $pct   = "{0:F1}%" -f ($ratio * 100)
+        $len = [int]($ratio * 50)
+        $bar = '#' * $len
+        $pct = "{0:F1}%" -f ($ratio * 100)
         Write-Host ("  {0,-22} " -f $entry.Key) -NoNewline
         Write-Host ("{0,-54}" -f $bar) -NoNewline -ForegroundColor Green
         Write-Host ("  {0,5}  ({1})" -f $entry.Value, $pct) -ForegroundColor Gray
@@ -169,7 +169,7 @@ function Write-FunnelChart {
 # ─────────────────────────────────────────────────────────────────────────────
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$csvPath   = Join-Path $scriptDir 'Data\sample_ecommerce.csv'
+$csvPath = Join-Path $scriptDir 'Data\sample_ecommerce.csv'
 
 Write-Host "`n  ===== FUNNEL EDA =====" -ForegroundColor Cyan
 Write-Host "  Exploratory Data Analysis | E-Commerce Funnel Dataset`n" -ForegroundColor White
@@ -182,7 +182,7 @@ if (-not (Test-Path $csvPath)) {
 $rows = Import-Csv $csvPath
 Write-Host ("  Loaded {0} rows from {1}" -f $rows.Count, $csvPath) -ForegroundColor Green
 
-$numColNames = @('age','session_duration_sec','pages_viewed','added_to_cart','purchased','order_value')
+$numColNames = @('age', 'session_duration_sec', 'pages_viewed', 'added_to_cart', 'purchased', 'order_value')
 
 # ─────────────────────────────────────────────────────────────────────────────
 #  1. Descriptive Statistics
@@ -192,13 +192,13 @@ Write-Rule '1. Descriptive Statistics'
 
 $allStats = New-Object System.Collections.Generic.List[PSObject]
 foreach ($col in $numColNames) {
-    $raw  = @($rows | ForEach-Object { $_.$col })
+    $raw = @($rows | ForEach-Object { $_.$col })
     $stat = Get-ColStats -Name $col -raw $raw
     $allStats.Add($stat)
 }
 
 Write-Host ("  {0,-22} {1,6} {2,8} {3,8} {4,8} {5,8} {6,8} {7,8} {8,8} {9,8} {10,8} {11,8}" -f `
-    'Column','Count','Missing','Min','Q1','Median','Mean','Q3','Max','StdDev','Skew','Outliers') -ForegroundColor White
+        'Column', 'Count', 'Missing', 'Min', 'Q1', 'Median', 'Mean', 'Q3', 'Max', 'StdDev', 'Skew', 'Outliers') -ForegroundColor White
 Write-Host ('  ' + ('-' * 110))
 
 foreach ($s in $allStats) {
@@ -207,7 +207,7 @@ foreach ($s in $allStats) {
     Write-Host ("  {0,-22} {1,6} " -f $s.Column, $s.Count) -NoNewline
     Write-Host ("{0,8} " -f $s.Missing) -NoNewline -ForegroundColor $mColor
     Write-Host ("{0,8:F2} {1,8:F2} {2,8:F2} {3,8:F2} {4,8:F2} {5,8:F2} {6,8:F2} {7,8:F2} " -f `
-        $s.Min, $s.Q1, $s.Median, $s.Mean, $s.Q3, $s.Max, $s.StdDev, $s.Skewness) -NoNewline
+            $s.Min, $s.Q1, $s.Median, $s.Mean, $s.Q3, $s.Max, $s.StdDev, $s.Skewness) -NoNewline
     Write-Host ("{0,8}" -f $s.Outliers.Count) -ForegroundColor $oColor
 }
 
@@ -220,7 +220,8 @@ Write-Rule '2. Missing Values'
 $missingCols = @($allStats | Where-Object { $_.Missing -gt 0 })
 if ($missingCols.Count -eq 0) {
     Write-Host '  No missing values found.' -ForegroundColor Green
-} else {
+}
+else {
     $mData = @{}
     foreach ($s in $missingCols) { $mData[$s.Column] = [double]$s.Missing }
     Write-BarChart -Title 'Missing Values per Column' -Data $mData -Color Red
@@ -254,13 +255,13 @@ if (-not $foundOutliers) { Write-Host '  No outliers detected.' -ForegroundColor
 Write-Rule '4. Correlation Analysis (Pearson r)'
 
 $completeRows = @($rows | Where-Object {
-    $r = $_
-    $ok = $true
-    foreach ($col in $numColNames) {
-        if ($r.$col -eq '' -or $null -eq $r.$col) { $ok = $false; break }
-    }
-    $ok
-})
+        $r = $_
+        $ok = $true
+        foreach ($col in $numColNames) {
+            if ($r.$col -eq '' -or $null -eq $r.$col) { $ok = $false; break }
+        }
+        $ok
+    })
 Write-Host ("  Using {0} complete rows (all numeric columns populated)." -f $completeRows.Count)
 
 $arrays = @{}
@@ -273,20 +274,20 @@ for ($ci = 0; $ci -lt $numColNames.Count; $ci++) {
     for ($cj = $ci + 1; $cj -lt $numColNames.Count; $cj++) {
         $r = Get-PearsonR -x $arrays[$numColNames[$ci]] -y $arrays[$numColNames[$cj]]
         $corrPairs.Add([PSCustomObject]@{
-            ColumnA  = $numColNames[$ci]
-            ColumnB  = $numColNames[$cj]
-            PearsonR = $r
-        })
+                ColumnA  = $numColNames[$ci]
+                ColumnB  = $numColNames[$cj]
+                PearsonR = $r
+            })
     }
 }
 $corrSorted = @($corrPairs | Sort-Object { [math]::Abs($_.PearsonR) } -Descending)
 
-Write-Host ("`n  {0,-25} {1,-25} {2,10}  {3}" -f 'Column A','Column B','Pearson r','Strength') -ForegroundColor White
+Write-Host ("`n  {0,-25} {1,-25} {2,10}  {3}" -f 'Column A', 'Column B', 'Pearson r', 'Strength') -ForegroundColor White
 Write-Host ('  ' + ('-' * 72))
 foreach ($c in ($corrSorted | Select-Object -First 15)) {
-    $abs      = [math]::Abs($c.PearsonR)
+    $abs = [math]::Abs($c.PearsonR)
     $strength = if ($abs -ge 0.7) { 'Strong' } elseif ($abs -ge 0.4) { 'Moderate' } elseif ($abs -ge 0.2) { 'Weak' } else { 'Negligible' }
-    $rColor   = if ($c.PearsonR -ge 0) { 'Green' } else { 'Red' }
+    $rColor = if ($c.PearsonR -ge 0) { 'Green' } else { 'Red' }
     Write-Host ("  {0,-25} {1,-25} " -f $c.ColumnA, $c.ColumnB) -NoNewline
     Write-Host ("{0,10}  " -f $c.PearsonR) -NoNewline -ForegroundColor $rColor
     Write-Host $strength
@@ -358,28 +359,28 @@ $report = [ordered]@{
     generated_at = (Get-Date -Format 'o')
     row_count    = $rows.Count
     column_stats = @($allStats | ForEach-Object {
-        $s = $_
-        [ordered]@{
-            column        = $s.Column
-            count         = $s.Count
-            missing       = $s.Missing
-            missing_pct   = [math]::Round($s.Missing / $s.Count * 100, 2)
-            min           = $s.Min
-            q1            = $s.Q1
-            median        = $s.Median
-            mean          = $s.Mean
-            q3            = $s.Q3
-            max           = $s.Max
-            std_dev       = $s.StdDev
-            skewness      = $s.Skewness
-            outlier_count = $s.Outliers.Count
-        }
-    })
+            $s = $_
+            [ordered]@{
+                column        = $s.Column
+                count         = $s.Count
+                missing       = $s.Missing
+                missing_pct   = [math]::Round($s.Missing / $s.Count * 100, 2)
+                min           = $s.Min
+                q1            = $s.Q1
+                median        = $s.Median
+                mean          = $s.Mean
+                q3            = $s.Q3
+                max           = $s.Max
+                std_dev       = $s.StdDev
+                skewness      = $s.Skewness
+                outlier_count = $s.Outliers.Count
+            }
+        })
     correlations = @($corrSorted | ForEach-Object {
-        $c = $_
-        [ordered]@{ column_a = $c.ColumnA; column_b = $c.ColumnB; pearson_r = $c.PearsonR }
-    })
-    funnel = $funnel
+            $c = $_
+            [ordered]@{ column_a = $c.ColumnA; column_b = $c.ColumnB; pearson_r = $c.PearsonR }
+        })
+    funnel       = $funnel
 }
 
 $reportPath = Join-Path $scriptDir 'eda_report.json'

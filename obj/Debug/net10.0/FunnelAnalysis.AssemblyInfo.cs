@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FunnelAnalysis")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a8fe14002fc722f6be592d6fb4f7df4afd94065")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c104ba4b4cbfa4a0caacaa5cfbd0b78b66e803e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FunnelAnalysis")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FunnelAnalysis")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

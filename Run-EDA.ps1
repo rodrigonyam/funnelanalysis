@@ -12,7 +12,7 @@ function Write-Rule {
 }
 
 function Get-Median {
-    param([double[]]$sorted)
+    param([double[]]$sorted)4871bmk
     $n = $sorted.Count
     if ($n -eq 0) { return 0.0 }
     if ($n % 2 -eq 1) { return $sorted[($n - 1) / 2] }
